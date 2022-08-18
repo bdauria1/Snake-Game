@@ -27,6 +27,29 @@ document.addEventListener('DOMContentLoaded', () => {
         interval = setInterval(moveOutcomes, intervalTime)
     }
 
+
+    function moveOutcomes(){
+        if ((currentSnake[0] + width >= (width * width) && direction == width) || (currentSnake[0] % width == width - 1 && direction == 1) || (currentSnake[0] % width == 0 && direction) || (currentSnake[0] - width < 0 && direction == -width) || (squares[currentSnake[0] + direction].classList.contains('snake'))){
+            return clearInterval(interval)
+        }
+        const tail = currentSnake.pop()
+        squares.[tail].classList.remove('snake')
+        currentSnake.unshift(currentSnake[0] + direction)
+    
+        if(squares[currentSnake[0]].classList.contains('apple')){
+            squares.currentSnake[0].remove('apple')
+            squares[tail].classList.add('snake')
+            currentSnake.push(tail)
+            score++
+            scoreDisplay.textContent = score
+            clearInterval(interval)
+            intervalTime = intervalTime * speed
+            interval = setInterval(moveOutcomes, intervalTime)
+        }
+        squares[currentSnake[0]].classList.add('snake')
+    }
+
+   
     function control(e) {
         squares[currentIndex].classList.remove('snake')
 
@@ -42,4 +65,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('keyup', control)
+    startBtn.addEventListener('click', startGame)
 })
