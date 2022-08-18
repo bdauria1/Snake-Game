@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let direction = 1
     let score = 0
-    let speed = .9
+    let speed = 0.9
     let intervalTime = 0
     let interval = 0
 
@@ -33,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return clearInterval(interval)
         }
         const tail = currentSnake.pop()
-        squares.[tail].classList.remove('snake')
+        squares[tail].classList.remove('snake')
         currentSnake.unshift(currentSnake[0] + direction)
     
         if(squares[currentSnake[0]].classList.contains('apple')){
             squares.currentSnake[0].remove('apple')
             squares[tail].classList.add('snake')
             currentSnake.push(tail)
+            randomApple()
             score++
             scoreDisplay.textContent = score
             clearInterval(interval)
@@ -49,7 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         squares[currentSnake[0]].classList.add('snake')
     }
 
-   
+   function randomApple(){
+    do{
+        appleIndex = Math.floor(Math.random() * square.length)
+    }while(squares[appleIndex].classList.contains('snake'))
+    squares[appleIndex].classList.add('apple')
+   }
+
     function control(e) {
         squares[currentIndex].classList.remove('snake')
 
